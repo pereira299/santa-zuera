@@ -6,15 +6,21 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
+    "@apollo/client": "^3.11.4",
     "@as-integrations/next": "^3.1.0",
     "@google/generative-ai": "^0.17.1",
-    "@libsql/client": "^0.10.0",
-    "apollo-datasource-mongodb": "^0.6.0",
+    "apollo-server-micro": "^3.13.0",
+    "contentful": "^10.15.0",
+    "contentful-management": "^11.33.0",
     "googleapis": "^142.0.0",
-    "mongoose": "^8.5.4",
+    "graphql": "^16.9.0",
+    "graphql-tag": "^2.12.6",
     "next": "14.2.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"

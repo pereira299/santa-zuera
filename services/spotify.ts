@@ -55,10 +55,13 @@ class Spotify {
     return await res.json();
   }
 
-  async getEpisodeList(page?: number, take: number = 50): Promise<List<SpotifyEpisode>> {
+  async getEpisodeList(
+    page?: number,
+    take: number = 50
+  ): Promise<List<SpotifyEpisode>> {
     // Get token
     const token = await this.hasToken();
-    const start = page ? (page-1) * take : 0;
+    const start = page ? (page - 1) * take : 0;
     // Crawl Spotify API
     const res = await fetch(
       `${this.baseUrl}/shows/${this.podcastId}/episodes?offset=${start}&limit=${take}`,
@@ -70,6 +73,18 @@ class Spotify {
     );
 
     return await res.json();
+  }
+
+  getId(data: SpotifyEpisode): number {
+    const name = data.name.split("-");
+    const id =
+      name.find((n) => n.includes("#"))?.replace(/[^#\d{1,8}]/g, "") || "";
+    return Number(id.substring(1));
+  }
+
+  getTitle(data: SpotifyEpisode): string {
+    const name = data.name.split("-");
+    return name.find((n) => !n.includes("#"))?.trim() || "";
   }
 }
 

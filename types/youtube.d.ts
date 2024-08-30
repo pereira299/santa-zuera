@@ -73,7 +73,7 @@ type Thumbnails = {
 export type YoutubeSearch = {
     kind: string;
     etag: string;
-    nextPageToken: string;
+    nextPageToken?: string;
     regionCode: string;
     pageInfo: {
         totalResults: number;
@@ -100,7 +100,7 @@ export type PlaylistItem = {
             videoId: string;
         };
     };
-    contentDetails: {
+    contentDetails?: {
         videoId: string;
         videoPublishedAt: string;
     };

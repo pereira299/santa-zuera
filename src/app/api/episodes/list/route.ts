@@ -1,48 +1,50 @@
-import Spotify from "@/services/spotify";
-import {
-  getCategories,
-  getTitle,
-  getId,
-  getParticipants,
-} from "@/utils/spotify";
-import { Episode, List } from "@/types/global";
-import { NextRequest } from "next/server";
-import Gemini from "@/services/gemini";
+import { NextRequest, NextResponse } from "next/server";
+import contentful from "@/services/contentful";
+import { Entry } from "contentful";
 
 export async function GET(req: NextRequest) {
-  const spotify = new Spotify();
   const search = req.nextUrl.searchParams;
-  const page = search.get("page") || 1;
-  const qtd = search.get("qtd") || 20;
+  const page = Number(search.get("page") || 1);
+  const qtd = Number(search.get("qtd") || 20);
 
-  const data = await spotify.getEpisodeList(+page, +qtd);
-  const result: List<Episode> = {
-    items: [],
-    meta: data.meta,
-  };
+  const res = await contentful.getEntries({
+    content_type: "episode",
+    select: [
+      "fields.title",
+      "fields.thumbnail",
+      "fields.publishDate",
+      "fields.categories",
+      "fields.participantes",
+    ],
+    limit: qtd,
+    skip: (page - 1) * qtd,
+    order: ["-fields.publishDate"],
+  });
 
-  const gemini = new Gemini();
-  console.log(data);
-  for (const item of data.items) {
-    const id = getId(item);
-    const title = getTitle(item);
-    const [participants, categories] = await Promise.all([
-      getParticipants(item, gemini),
-      getCategories(item, title, [], gemini),
-    ]);
-    result.items.push({
-      id,
-      thumbnail: item.images[0].url,
-      title,
-      description: item.description,
-      duration: item.duration_ms,
-      links: {
-        spotify: item.external_urls.spotify, 
-        youtube: "",
-      },
-      date: new Date(item.release_date),
-      participants: participants,
-      categories: categories,
-    });
-  }
+  const sanitized = res.items.map((item) => {
+    const categories = (item.fields.categories as Array<Entry>)?.map((c) => ({
+      id: c.sys.id,
+      name: c.fields.name,
+    }));
+
+    const participantes = (item.fields.participantes as Array<Entry>)?.map(
+      (p) => ({
+        id: p.sys.id,
+        name: p.fields.name,
+        photoUrl:
+          p.fields.photoUrl ||
+          `https://avatar.iran.liara.run/username?username=${
+            (p.fields.name as string).trim().split(" ")[0]
+          }`,
+      })
+    );
+
+    return {
+      ...item.fields,
+      id: item.sys.id,
+      categories,
+      participantes,
+    };
+  });
+  return NextResponse.json(sanitized);
 }

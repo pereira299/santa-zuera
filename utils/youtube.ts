@@ -1,6 +1,6 @@
-import { PlaylistItem } from "@/types/youtube";
+import { PlaylistItem, Video } from "@/types/youtube";
 
-export const getId = (data: PlaylistItem): number => {
+export const getId = (data: PlaylistItem | Video): number => {
   const name = data.snippet.title.split("|");
   const id =
     name.find((n) => n.includes("#"))?.replace(/[^#\d{1,8}]/g, "") || "";

@@ -1,8 +1,7 @@
 import { google, youtube_v3 } from "googleapis";
-import { Channel, Playlist, PlaylistItem } from "@/types/youtube";
+import { Channel, Playlist, PlaylistItem, YoutubeSearch } from "@/types/youtube";
 
 type contentType = "video" | "playlist" | "channel" | "playlistItem";
-
 class GoogleYoutube {
   private youtube: youtube_v3.Youtube;
 
@@ -12,7 +11,7 @@ class GoogleYoutube {
       auth: process.env.GCP_API_KEY,
     });
   }
-  async search(search: string, type: contentType[]): Promise<any> {
+  async search(search: string, type: contentType[]): Promise<YoutubeSearch> {
     const res = await this.youtube.search
       .list({
         part: ["snippet"],
