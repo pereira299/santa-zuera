@@ -5,6 +5,14 @@ const nextConfig = {
             {
                 protocol: 'https',
                 hostname: 'avatar.iran.liara.run'
+            },
+            {
+                protocol: 'https',
+                hostname: 'tinyurl.com'
+            },
+            {
+                protocol: 'https',
+                hostname: 'shorturl.at',
             }
         ]
     }

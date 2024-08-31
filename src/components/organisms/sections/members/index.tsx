@@ -6,7 +6,7 @@ const Members = () => {
   return (
     <section
       id="membros"
-      className="w-full min-h-screen flex justify-center items-center"
+      className="max-lg:hidden w-full min-h-screen flex justify-center items-center"
     >
       <Image
         src={"/sz-membros.png"}
