@@ -1,0 +1,87 @@
+import Episode from "@/src/components/molecules/episode";
+
+const LastEpisodes = () => {
+  const episodes = [
+    {
+      title: "Episódio 1",
+      date: "2021-08-01",
+      thumbnail: "/sz-ep1.png",
+      categories: [
+        { name: "Humor", id: "1" },
+        { name: "Entrevista", id: "2" },
+      ],
+      persons: [
+        {
+          name: "Hian",
+          photoUrl: "/hian.png",
+          id: "1",
+        },
+        {
+          name: "Gustavo",
+          photoUrl: "/gustavo.png",
+          id: "2",
+        },
+      ],
+    },
+    {
+      title: "Episódio 2",
+      date: "2021-08-08",
+      thumbnail: "/sz-ep2.png",
+      categories: [
+        { name: "Humor", id: "1" },
+        { name: "Entrevista", id: "2" },
+      ],
+      persons: [
+        {
+          name: "Hian",
+          photoUrl: "/hian.png",
+          id: "1",
+        },
+        {
+          name: "Gustavo",
+          photoUrl: "/gustavo.png",
+          id: "2",
+        },
+      ],
+    },
+    {
+      title: "Episódio 3",
+      date: "2021-08-15",
+      thumbnail: "/sz-ep3.png",
+      categories: [
+        { name: "Humor", id: "1" },
+        { name: "Entrevista", id: "2" },
+      ],
+      persons: [
+        {
+          name: "Hian",
+          photoUrl: "/hian.png",
+          id: "1",
+        },
+        {
+          name: "Gustavo",
+          photoUrl: "/gustavo.png",
+          id: "2",
+        },
+      ],
+    },
+  ];
+
+  return (
+    <section
+      id="episodes"
+      className="w-full min-h-screen px-10 flex flex-col justify-center items-center"
+    >
+      <h3 className="font-bitter text-4xl font-bold">Últimos episódios</h3>
+      <ul className="flex flex-row gap-x-10 w-full justify-center">
+        {episodes.map((episode) => (
+            <li key={episode.title} className="w-4/12">
+                <Episode {...episode} />
+            </li>
+        ))}
+      </ul>
+    </section>
+  );
+};
+
+export default LastEpisodes;

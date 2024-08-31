@@ -1,8 +1,19 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Bitter, Caveat, Gloria_Hallelujah, Lato } from "next/font/google";
 import "./globals.css";
+import Header from "../components/molecules/header";
 
-const inter = Inter({ subsets: ["latin"] });
+const lato = Lato({
+  subsets: ["latin"],
+  weight: ["300", "400", "700"],
+  variable: "--font-lato",
+});
+const bitter = Bitter({ subsets: ["latin"], variable: "--font-bitter" });
+export const gloria = Gloria_Hallelujah({
+  subsets: ["latin"],
+  variable: "--font-gloria",
+  weight: ["400"],
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,8 +26,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="pt" className="scroll-smooth">
+      <body
+        className={`${bitter.variable} ${lato.variable} ${gloria.variable} font-lato bg-black`}
+      >
+        <Header />
+        {children}
+      </body>
     </html>
   );
 }
