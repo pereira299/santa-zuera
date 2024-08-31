@@ -26,7 +26,7 @@ const Episode = (props: EpisodeProps) => {
     .format(date)
     .replace("de ", "");
   return (
-    <div>
+    <div className="hover:brightness-90">
       <div className="w-full h-56 rounded-2xl bg-slate-400 flex flex-row justify-end p-2 gap-x-2">
         <Chip label={props.categories[0].name} />
         <Chip label={`+${props.categories.length - 1}`} />
@@ -38,7 +38,7 @@ const Episode = (props: EpisodeProps) => {
         </span> 
         <span className="flex flex-row">
             {props.persons.map((person) => (
-                <Avatar key={person.id} name={person.name} />
+                <Avatar key={person.id} name={person.name} stacked />
             ))}
         </span>
       </div>

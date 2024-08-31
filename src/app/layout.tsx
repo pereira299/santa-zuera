@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Bitter, Caveat, Gloria_Hallelujah, Lato } from "next/font/google";
 import "./globals.css";
 import Header from "../components/molecules/header";
+import Footer from "../components/molecules/footer";
 
 const lato = Lato({
   subsets: ["latin"],
@@ -28,10 +29,11 @@ export default function RootLayout({
   return (
     <html lang="pt" className="scroll-smooth">
       <body
-        className={`${bitter.variable} ${lato.variable} ${gloria.variable} font-lato bg-black`}
+        className={`${bitter.variable} ${lato.variable} ${gloria.variable} dark font-lato bg-black`}
       >
         <Header />
         {children}
+        <Footer />
       </body>
     </html>
   );

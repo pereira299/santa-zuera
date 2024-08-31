@@ -1,4 +1,5 @@
 import Episode from "@/src/components/molecules/episode";
+import { Button } from "@/src/components/ui/button";
 
 const LastEpisodes = () => {
   const episodes = [
@@ -70,7 +71,7 @@ const LastEpisodes = () => {
   return (
     <section
       id="episodes"
-      className="w-full min-h-screen px-10 flex flex-col justify-center items-center"
+      className="w-full min-h-screen px-10 pt-10 flex flex-col gap-y-10 justify-center items-center"
     >
       <h3 className="font-bitter text-4xl font-bold">Últimos episódios</h3>
       <ul className="flex flex-row gap-x-10 w-full justify-center">
@@ -80,6 +81,11 @@ const LastEpisodes = () => {
             </li>
         ))}
       </ul>
+      <Button
+        className="w-4/12 font-bold"
+      >
+        Ver todos os episódios
+      </Button>
     </section>
   );
 };

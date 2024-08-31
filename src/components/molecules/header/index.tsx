@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const Header = () => {
   return (
-    <header className="flex flex-row left-[9%] mt-4 p-3 rounded-xl backdrop-blur-lg fixed w-10/12 bg-zinc-700/50 justify-between items-center">
+    <header className="flex flex-row left-[9%] mt-4 p-3 z-50 rounded-xl backdrop-blur-lg fixed w-10/12 bg-zinc-700/50 justify-between items-center">
       <Link href="/" className="hover:brightness-75">
         <Image
           src="/santa-zuera.png"

@@ -16,7 +16,7 @@ const Members = () => {
         className="w-10/12 h-fit"
       />
 
-      <span className={`${gloria.className}`}>
+      <span className={`${gloria.className} text-white `}>
         <span className="absolute left-5 flex flex-col justify-center items-center">
           <CornerUpRight size={50} strokeWidth={1.25} className="ml-8" />
           <p className="text-center">
