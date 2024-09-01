@@ -3,6 +3,7 @@ import { Bitter, Caveat, Gloria_Hallelujah, Lato } from "next/font/google";
 import "./globals.css";
 import Header from "../components/molecules/header";
 import Footer from "../components/molecules/footer";
+import PageLoader from "../components/organisms/page-loader";
 
 const lato = Lato({
   subsets: ["latin"],
@@ -26,11 +27,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  
   return (
     <html lang="pt" className="scroll-smooth">
       <body
         className={`${bitter.variable} ${lato.variable} ${gloria.variable} dark font-lato overflow-x-hidden bg-black`}
       >
+        <PageLoader />
         <Header />
         {children}
         <Footer />

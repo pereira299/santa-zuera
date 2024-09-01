@@ -3,13 +3,12 @@ import contentful from "@/services/contentful";
 import { Entry } from "contentful";
 
 export async function GET(req: NextRequest) {
-  console.time("episodes");
   const search = req.nextUrl.searchParams;
   const page = Number(search.get("page") || 1);
   const qtd = Number(search.get("qtd") || 20);
   const title = search.get("title");
-  const categories = search.get("categories");
-  const participantes = search.get("participantes");
+  const categories = search.get("category[]");
+  const participantes = search.get("person[]");
   const dateStart = search.get("dateStart");
   const dateEnd = search.get("dateEnd");
 
@@ -72,6 +71,9 @@ export async function GET(req: NextRequest) {
       participantes,
     };
   });
-  console.timeEnd("episodes");
-  return NextResponse.json(sanitized);
+  return NextResponse.json({
+    total: Math.floor(res.total/ res.limit),
+    page,
+    items: sanitized,
+  });
 }

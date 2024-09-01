@@ -1,4 +1,4 @@
-export type List<T> = {
+export declare type List<T> = {
   items: T[];
   meta: {
     page: number;
@@ -8,24 +8,24 @@ export type List<T> = {
   };
 };
 
-declare type Item = {
+export declare type Item = {
   value: string;
   label: string;
 };
 
-declare type Category = {
+export declare type Category = {
   id: string;
   name: string;
 };
 
-declare type Person = {
+export declare type Person = {
   id: string;
   name: string;
   photoUrl: string;
   instagramUrl: string;
 };
 
-export type Episode = {
+export declare type Episode = { 
   id: number;
   thumbnail: string;
   title: string;

@@ -14,6 +14,7 @@ type EpisodeProps = {
     id: string;
   }[];
   thumbnail: string;
+  className?: string;
 };
 
 const Episode = (props: EpisodeProps) => {
@@ -26,31 +27,44 @@ const Episode = (props: EpisodeProps) => {
     .format(date)
     .replace("de ", "");
 
-  const persons = props.persons.length > 3 ? [...props.persons.slice(0, 2), {
-    name: `%2B${props.persons.length - 2}`,
-    photoUrl: "",
-    id: "",
-  }] : props.persons; 
+  const persons =
+    props.persons.length > 3
+      ? [
+          ...props.persons.slice(0, 2),
+          {
+            name: `%2B${props.persons.length - 2}`,
+            photoUrl: "",
+            id: "",
+          },
+        ]
+      : props.persons;
   return (
-    <div className="hover:brightness-90">
-      <div 
+    <div className={`${props.className} hover:brightness-90`}>
+      <div
         className="w-full h-56 rounded-2xl transition-all duration-200 bg-center bg-cover hover:bg-[size:120%] bg-slate-400 flex flex-row justify-end p-2 gap-x-2"
         style={{
           backgroundImage: `url(${props.thumbnail})`,
-        }}  
+        }}
       >
         <Chip label={props.categories[0].name} />
-        <Chip label={`+${props.categories.length - 1}`} />
+        {props.categories.length > 1 && (
+          <Chip label={`+${props.categories.length - 1}`} />
+        )}
       </div>
       <div className="flex flex-row justify-between mt-2">
-        <span>
+        <span className="w-8/12">
           <h5 className="font-bold text-2xl text-white">{props.title}</h5>
           <p className="text-sm text-zinc-400">Exibido em {formattedDate}</p>
-        </span> 
+        </span>
         <span className="flex flex-row">
-            {persons.map((person) => (
-                <Avatar key={person.id} name={person.name} image={person.photoUrl} stacked />
-            ))}
+          {persons.map((person) => (
+            <Avatar
+              key={person.id}
+              name={person.name}
+              image={person.photoUrl}
+              stacked
+            />
+          ))}
         </span>
       </div>
     </div>

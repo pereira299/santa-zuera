@@ -1,6 +1,7 @@
 import Episode from "@/src/components/molecules/episode";
 import { Button } from "@/src/components/ui/button";
 import { Episode as EpisodeType } from "@/types/global";
+import Link from "next/link";
 
 type EpisodeProps = {
   episodes: Array<EpisodeType>;
@@ -21,11 +22,11 @@ const LastEpisodes = ({episodes}: EpisodeProps) => {
             </li>
         ))}
       </ul>
-      <Button
-        className="w-full md:w-4/12 mb-10 font-bold"
+      <Link href="/episodios"
+        className="w-full md:w-4/12 mb-10 font-bold bg-white hover:bg-zinc-200 transition-colors text-black p-2 rounded-lg text-center"   
       >
         Ver todos os episódios
-      </Button>
+      </Link>
     </section>
   );
 };

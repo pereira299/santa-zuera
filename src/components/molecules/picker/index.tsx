@@ -8,7 +8,11 @@ type PickerProps = {
   className?: string;
   placeholder?: string;
   noOptionsMessage?: string;
+  onload: boolean;
+  minQueryLength?: number;
+  max?: number;
   onChange?: (value: Item[]) => void;
+  onSearch?: (search: string) => void;
 };
 
 export function Picker({ options, selected, ...props }: PickerProps) {
@@ -22,6 +26,16 @@ export function Picker({ options, selected, ...props }: PickerProps) {
     props.onChange?.(selectedList);
   };
 
+  const handleEvent = (
+    e: React.KeyboardEvent<HTMLInputElement>,
+    value: string
+  ) => {
+    console.log(e, value);
+    if (e.key === "Enter") {
+      e.preventDefault();
+      return;
+    }
+  };
   return (
     <Multiselect
       options={options} // Options to display in the dropdown
@@ -31,6 +45,10 @@ export function Picker({ options, selected, ...props }: PickerProps) {
       displayValue="label" // Property name to display in the dropdown options
       placeholder={props.placeholder || "Selecione..."}
       customCloseIcon={<CircleX size={18} className="ml-1 text-zinc-600" />}
+      selectionLimit={props.max}
+      emptyRecordMsg={props.noOptionsMessage || "Nenhum resultado encontrado"}
+      onSearch={props.onSearch}
+      onKeyPressFn={handleEvent}
     />
   );
 }

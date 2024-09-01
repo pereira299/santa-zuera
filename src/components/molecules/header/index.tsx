@@ -9,7 +9,7 @@ const Header = () => {
       <Button variant={"ghost"} className="md:hidden">
         <Menu className="w-7 h-fit"/>
       </Button>
-      <Link href="/" className="hover:brightness-75 w-4/12 xs:w-3/12 sm:w-2/12 md:w-[10%]">
+      <Link href="/" aria-label="santa-zuera" className="hover:brightness-75 w-4/12 xs:w-3/12 sm:w-2/12 md:w-[10%]">
         <Image
           src="/santa-zuera.png"
           alt="Santa Zuera"
@@ -21,13 +21,13 @@ const Header = () => {
       <nav className="text-white w-fit h-fit mr-5 max-md:hidden">
         <ul className="flex flex-row gap-x-10 text-lg 3xl:text-3xl">
           <li className="hover:text-zinc-300">
-            <Link href="#membros" className="underline-link">Integrantes</Link>
+            <Link href="#membros" aria-label="membros" className="underline-link">Integrantes</Link>
           </li>
           <li className="hover:text-zinc-300">
-            <Link href="#episodes" className="underline-link">Últimos episódios</Link>
+            <Link href="#episodes" aria-label="episódios" className="underline-link">Últimos episódios</Link>
           </li>
           <li className="hover:text-zinc-300">
-            <Link href="#">
+            <Link href="#" aria-label="Pesquisa">
               <Search className="w-6 3xl:w-9 h-fit"/>
             </Link>
           </li>

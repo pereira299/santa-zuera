@@ -28,7 +28,7 @@
 }
 
 .underline-link::before {
-  content: '';
+  content: "";
   position: absolute;
   width: 100%;
   height: 2px;
@@ -38,7 +38,7 @@
   left: 0;
   transform-origin: right;
   transform: scaleX(0);
-  transition: transform .3s ease-in-out;
+  transition: transform 0.3s ease-in-out;
 }
 
 .underline-link:hover::before {
@@ -56,7 +56,8 @@
   transition: opacity 0.3s;
 }
 
-div:hover .tooltip, img:hover ~ .tooltip{
+div:hover .tooltip,
+img:hover ~ .tooltip {
   opacity: 1;
   pointer-events: auto;
   z-index: ;
@@ -73,7 +74,6 @@ div:hover .tooltip, img:hover ~ .tooltip{
   border-color: black transparent transparent transparent;
 }
 
-
 aside .searchWrapper {
   background-color: #3f3f46;
   border: none;
@@ -85,20 +85,52 @@ aside .searchWrapper .chip {
   background-color: #ffffff;
   color: #3f3f46;
   border-radius: 50px;
-  font-weight: '500';
+  font-weight: "500";
   padding: 0.2rem 0.5rem;
 }
 
 aside ul.optionContainer {
   background-color: #3f3f46;
   border: none;
-  border-radius: 8px;
   padding: 0.5rem 0rem;
+  max-height: 200px;
 }
 
-aside ul.optionContainer li.highlight, aside ul.optionContainer li:hover {
+aside .optionListContainer {
+  border-bottom-left-radius: 1.25rem;
+  border-bottom-right-radius: 1.25rem;
+}
+aside ul.optionContainer li {
+  padding: 0.2rem 0.5rem;
+}
+
+aside ul.optionContainer li.highlight,
+aside ul.optionContainer li:hover {
   background-color: #ffffff;
   color: #3f3f46;
+  font-weight: 700;
+}
+
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #4f4f56; 
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #27272a; 
 }
 @layer base {
   :root {
