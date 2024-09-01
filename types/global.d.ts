@@ -8,17 +8,34 @@ export type List<T> = {
   };
 };
 
+declare type Item = {
+  value: string;
+  label: string;
+};
+
+declare type Category = {
+  id: string;
+  name: string;
+};
+
+declare type Person = {
+  id: string;
+  name: string;
+  photoUrl: string;
+  instagramUrl: string;
+};
+
 export type Episode = {
-    id: number;
-    thumbnail: string;
-    title: string;
-    description: string;
-    duration: number;
-    links: {
-        spotify: string;
-        youtube: string;
-    };
-    date: Date;
-    participants: string[];
-    categories: string[];
-}
+  id: number;
+  thumbnail: string;
+  title: string;
+  description: string;
+  duration: number;
+  links: {
+    spotify: string;
+    youtube: string;
+  };
+  publishDate: string;
+  participantes: Person[];
+  categories: Category[];
+};

@@ -29,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="pt" className="scroll-smooth">
       <body
-        className={`${bitter.variable} ${lato.variable} ${gloria.variable} dark font-lato bg-black`}
+        className={`${bitter.variable} ${lato.variable} ${gloria.variable} dark font-lato overflow-x-hidden bg-black`}
       >
         <Header />
         {children}

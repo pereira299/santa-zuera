@@ -3,7 +3,7 @@ import Chip from "../../atoms/chip";
 
 type EpisodeProps = {
   title: string;
-  date: string;
+  publishDate: string;
   categories: {
     name: string;
     id: string;
@@ -17,7 +17,7 @@ type EpisodeProps = {
 };
 
 const Episode = (props: EpisodeProps) => {
-  const date = new Date(props.date);
+  const date = new Date(props.publishDate);
   const formattedDate = Intl.DateTimeFormat("pt-BR", {
     day: "2-digit",
     month: "short",
@@ -25,9 +25,20 @@ const Episode = (props: EpisodeProps) => {
   })
     .format(date)
     .replace("de ", "");
+
+  const persons = props.persons.length > 3 ? [...props.persons.slice(0, 2), {
+    name: `%2B${props.persons.length - 2}`,
+    photoUrl: "",
+    id: "",
+  }] : props.persons; 
   return (
     <div className="hover:brightness-90">
-      <div className="w-full h-56 rounded-2xl bg-slate-400 flex flex-row justify-end p-2 gap-x-2">
+      <div 
+        className="w-full h-56 rounded-2xl transition-all duration-200 bg-center bg-cover hover:bg-[size:120%] bg-slate-400 flex flex-row justify-end p-2 gap-x-2"
+        style={{
+          backgroundImage: `url(${props.thumbnail})`,
+        }}  
+      >
         <Chip label={props.categories[0].name} />
         <Chip label={`+${props.categories.length - 1}`} />
       </div>
@@ -37,8 +48,8 @@ const Episode = (props: EpisodeProps) => {
           <p className="text-sm text-zinc-400">Exibido em {formattedDate}</p>
         </span> 
         <span className="flex flex-row">
-            {props.persons.map((person) => (
-                <Avatar key={person.id} name={person.name} stacked />
+            {persons.map((person) => (
+                <Avatar key={person.id} name={person.name} image={person.photoUrl} stacked />
             ))}
         </span>
       </div>

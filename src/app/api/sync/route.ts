@@ -14,7 +14,6 @@ export async function GET(req: NextRequest) {
   // get episodes from spotify
   const spotifyEpisodes = await getSpotifyEpisodes();
 
-  console.log(spotifyEpisodes.items[0]);
   // check if there are new episodes
   const lastStoredEpisodeDate = new Date(
     lastStoredEpisode[0].fields.publishDate as string

@@ -73,6 +73,33 @@ div:hover .tooltip, img:hover ~ .tooltip{
   border-color: black transparent transparent transparent;
 }
 
+
+aside .searchWrapper {
+  background-color: #3f3f46;
+  border: none;
+  border-radius: 8px;
+  padding: 0.2rem 0.5rem;
+}
+
+aside .searchWrapper .chip {
+  background-color: #ffffff;
+  color: #3f3f46;
+  border-radius: 50px;
+  font-weight: '500';
+  padding: 0.2rem 0.5rem;
+}
+
+aside ul.optionContainer {
+  background-color: #3f3f46;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 0rem;
+}
+
+aside ul.optionContainer li.highlight, aside ul.optionContainer li:hover {
+  background-color: #ffffff;
+  color: #3f3f46;
+}
 @layer base {
   :root {
     --background: 0 0% 100%;

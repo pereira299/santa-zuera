@@ -27,7 +27,6 @@ export const getCategories = async (
   ]);
   const remove = ["podcast", "episodio", title.toLowerCase()];
 
-  console.log(res.categories);
   return res.categories.filter(
     (c) => !remove.some((r) => c.toLowerCase().includes(r))
   );

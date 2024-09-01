@@ -46,11 +46,6 @@ const Avatar = ({
     }
   return (
     <div className={`hover:z-50 group ${props.stacked ? "-ml-5" : ""} ${className}`}>
-      {!props.noTooltip && (
-        <span className="text-white group-hover:opacity-100 opacity-0 -mt-8 bg-zinc-700 px-2 py-1 absolute rounded-full before:absolute before:border-8 before:border-solid before:border-transparent before:mt-[1.6rem] before:ml-0 before:border-t-zinc-700 before:content-['']">
-          {name}
-        </span>
-      )}
       <Image
         src={photo}
         alt="Avatar"

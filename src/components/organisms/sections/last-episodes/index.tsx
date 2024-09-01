@@ -1,72 +1,12 @@
 import Episode from "@/src/components/molecules/episode";
 import { Button } from "@/src/components/ui/button";
+import { Episode as EpisodeType } from "@/types/global";
 
-const LastEpisodes = () => {
-  const episodes = [
-    {
-      title: "Episódio 1",
-      date: "2021-08-01",
-      thumbnail: "/sz-ep1.png",
-      categories: [
-        { name: "Humor", id: "1" },
-        { name: "Entrevista", id: "2" },
-      ],
-      persons: [
-        {
-          name: "Hian",
-          photoUrl: "/hian.png",
-          id: "1",
-        },
-        {
-          name: "Gustavo",
-          photoUrl: "/gustavo.png",
-          id: "2",
-        },
-      ],
-    },
-    {
-      title: "Episódio 2",
-      date: "2021-08-08",
-      thumbnail: "/sz-ep2.png",
-      categories: [
-        { name: "Humor", id: "1" },
-        { name: "Entrevista", id: "2" },
-      ],
-      persons: [
-        {
-          name: "Hian",
-          photoUrl: "/hian.png",
-          id: "1",
-        },
-        {
-          name: "Gustavo",
-          photoUrl: "/gustavo.png",
-          id: "2",
-        },
-      ],
-    },
-    {
-      title: "Episódio 3",
-      date: "2021-08-15",
-      thumbnail: "/sz-ep3.png",
-      categories: [
-        { name: "Humor", id: "1" },
-        { name: "Entrevista", id: "2" },
-      ],
-      persons: [
-        {
-          name: "Hian",
-          photoUrl: "/hian.png",
-          id: "1",
-        },
-        {
-          name: "Gustavo",
-          photoUrl: "/gustavo.png",
-          id: "2",
-        },
-      ],
-    },
-  ];
+type EpisodeProps = {
+  episodes: Array<EpisodeType>;
+};
+
+const LastEpisodes = ({episodes}: EpisodeProps) => {
 
   return (
     <section
@@ -77,7 +17,7 @@ const LastEpisodes = () => {
       <ul className="flex flex-col md:flex-row gap-10 w-full justify-center">
         {episodes.map((episode) => (
             <li key={episode.title} className="w-full md:w-4/12">
-                <Episode {...episode} />
+                <Episode {...episode} persons={episode.participantes} />
             </li>
         ))}
       </ul>
