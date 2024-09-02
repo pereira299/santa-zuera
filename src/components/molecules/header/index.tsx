@@ -1,14 +1,12 @@
-import { Menu, Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "../../ui/button";
+import MenuMobile from "../menu-mobile";
+import Search from "../../organisms/search";
 
 const Header = () => {
   return (
     <header className="flex flex-row left-[9%] mt-4 p-3 z-50 rounded-xl backdrop-blur-lg fixed w-10/12 bg-zinc-700/50 justify-between items-center">
-      <Button variant={"ghost"} className="md:hidden">
-        <Menu className="w-7 h-fit"/>
-      </Button>
+      <MenuMobile />
       <Link href="/" aria-label="santa-zuera" className="hover:brightness-75 w-4/12 xs:w-3/12 sm:w-2/12 md:w-[10%]">
         <Image
           src="/santa-zuera.png"
@@ -19,17 +17,15 @@ const Header = () => {
         />
       </Link>
       <nav className="text-white w-fit h-fit mr-5 max-md:hidden">
-        <ul className="flex flex-row gap-x-10 text-lg 3xl:text-3xl">
+        <ul className="flex flex-row gap-x-10 text-lg 3xl:text-3xl items-center">
           <li className="hover:text-zinc-300">
-            <Link href="#membros" aria-label="membros" className="underline-link">Integrantes</Link>
+            <Link href="/#membros" aria-label="membros" className="underline-link">Integrantes</Link>
           </li>
           <li className="hover:text-zinc-300">
-            <Link href="#episodes" aria-label="episódios" className="underline-link">Últimos episódios</Link>
+            <Link href="/#episodes" aria-label="episódios" className="underline-link">Últimos episódios</Link>
           </li>
           <li className="hover:text-zinc-300">
-            <Link href="#" aria-label="Pesquisa">
-              <Search className="w-6 3xl:w-9 h-fit"/>
-            </Link>
+            <Search />
           </li>
         </ul>
       </nav>

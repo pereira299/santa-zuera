@@ -10,7 +10,7 @@ type ChipProps = {
 const Chip = ({ label, onRemove, variant, remove }: ChipProps) => {
   const variants = {
     container: "bg-zinc-800 font-bold",
-    outlined: "border border-white text-sm",
+    outlined: "border border-white text-sm 2xl:text-lg",
   };
 
   return (

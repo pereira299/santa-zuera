@@ -23,6 +23,7 @@ const Filter = (props: FilterProps) => {
   const [title, setTitle] = useState("");
 
   useLayoutEffect(() => {
+    const search = window.location.search;
     const filters = window.sessionStorage.getItem("filters");
     if (!filters) return;
     const res = JSON.parse(filters);
@@ -112,7 +113,6 @@ const Filter = (props: FilterProps) => {
   };
 
   const searchPerson = async (search: string) => {
-    console.log(search.length);
     if (!search) {
       setPersons([]);
       return;
@@ -164,8 +164,8 @@ const Filter = (props: FilterProps) => {
       .join("&")}`;
   };
   return (
-    <aside className="flex flex-col gap-4 bg-zinc-800 p-3 rounded-2xl w-[21rem] fixed top-[10.2rem]">
-      <h4 className="text-xl font-bold w-fit">Filtros</h4>
+    <aside className="flex flex-col gap-4 bg-zinc-800 p-3 rounded-2xl w-full lg:w-[26vw] lg:fixed top-[10.2rem] 2xl:top-[11rem]">
+      <h4 className="text-xl 2xl:text-3xl font-bold w-fit">Filtros</h4>
       <div className="flex flex-row flex-wrap gap-2">
         {activeFilters.map((filter) => (
           <Chip
@@ -180,7 +180,7 @@ const Filter = (props: FilterProps) => {
           <Button
             onClick={clearFilters}
             variant="ghost"
-            className="font-bold text-zinc-400 w-fit px-1"
+            className="font-bold text-zinc-400 w-fit px-1 2xl:text-lg"
           >
             Limpar
           </Button>
@@ -188,7 +188,7 @@ const Filter = (props: FilterProps) => {
       </div>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full">
         <span className="flex flex-col flex-wrap">
-          <Label htmlFor="persons" className="w-full mb-2">
+          <Label htmlFor="persons" className="w-full mb-2 2xl:text-xl">
             Categorias <small>(máximo 3)</small>
           </Label>
           <Picker
@@ -201,7 +201,7 @@ const Filter = (props: FilterProps) => {
           />
         </span>
         <span className="flex flex-col flex-wrap">
-          <Label htmlFor="persons" className="w-full mb-2">
+          <Label htmlFor="persons" className="w-full mb-2 2xl:text-xl">
             Participantes <small>(máximo 2)</small>
           </Label>
           <Picker
@@ -214,16 +214,17 @@ const Filter = (props: FilterProps) => {
           />
         </span>
         <span className="w-full">
-          <Label htmlFor="title" className="">
+          <Label htmlFor="title" className="2xl:text-xl">
             Titulo
           </Label>
           <Input
             id="title"
             type="text"
             placeholder="Informe ao menos 3 caracteres..."
-            className="bg-zinc-700 rounded-lg p-2 w-full"
+            className="bg-zinc-700 rounded-lg p-2 w-full 2xl:text-lg"
             onChange={(e) => setTitle(e.target.value)}
             value={title}
+            autoFocus
           />
         </span>
         <Button type="submit">Filtrar</Button>

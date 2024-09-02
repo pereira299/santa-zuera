@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { Loader2 } from "lucide-react";
 import Image from "next/image";
 import { useLayoutEffect, useState } from "react";
@@ -20,10 +20,11 @@ const PageLoader = () => {
         width={500}
         height={500}
         alt="logo santa zuera"
+        className="w-10/12 sm:w-7/12 lg:w-4/12"
       />
       <Loader2
         size={50}
-        className="text-zinc-400 animate-spin"
+        className="text-zinc-400 animate-spin w-10 sm:w-16 2xl:w-28 h-fit"
         strokeWidth={1}
       />
     </div>

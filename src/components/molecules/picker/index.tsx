@@ -17,12 +17,10 @@ type PickerProps = {
 
 export function Picker({ options, selected, ...props }: PickerProps) {
   const onSelect = (selectedList: Item[], selectedItem: Item) => {
-    console.log(selectedList, selectedItem);
     props.onChange?.(selectedList);
   };
 
   const onRemove = (selectedList: Item[], removedItem: Item) => {
-    console.log(selectedList, removedItem);
     props.onChange?.(selectedList);
   };
 
@@ -30,7 +28,6 @@ export function Picker({ options, selected, ...props }: PickerProps) {
     e: React.KeyboardEvent<HTMLInputElement>,
     value: string
   ) => {
-    console.log(e, value);
     if (e.key === "Enter") {
       e.preventDefault();
       return;
@@ -49,6 +46,8 @@ export function Picker({ options, selected, ...props }: PickerProps) {
       emptyRecordMsg={props.noOptionsMessage || "Nenhum resultado encontrado"}
       onSearch={props.onSearch}
       onKeyPressFn={handleEvent}
+      className="2xl:text-lg"
+      closeOnSelect={true}
     />
   );
 }

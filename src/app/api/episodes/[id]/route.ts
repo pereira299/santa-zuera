@@ -36,10 +36,22 @@ export async function GET(
 
   const participantes = (
     res.items[0].fields.participantes as Array<Entry>
-  )?.map((p) => ({
-    ...p.fields,
-    id: p.sys.id,
-  }));
+  )?.map((p) => {
+    let url = "";
+    if (p.fields.instagram)
+      url =
+        "https:" +
+        (p.fields.instagram as { fields: { file: { url: string } } }).fields
+          .file.url;
+    else
+      url = `https://avatar.iran.liara.run/username?username=${p.fields.name}`;
+
+    return {
+      id: p.sys.id,
+      name: p.fields.name,
+      photoUrl: url,
+    };
+  });
 
   const description = (res.items[0].fields.description as RichText)?.content[0]
     .content[0].value;

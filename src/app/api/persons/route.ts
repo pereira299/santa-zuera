@@ -15,7 +15,7 @@ export async function GET(req: NextRequest) {
     "fields.name[match]"?: string;
   } = {
     content_type: "person",
-    select: ["fields.name", "fields.photoUrl", "fields.instagramUrl", "sys.id"],
+    select: ["fields.name", "fields.photoUrl", "fields.instagram", "sys.id"],
     limit: qtd,
     skip: (page - 1) * qtd,
   };
@@ -25,15 +25,23 @@ export async function GET(req: NextRequest) {
   }
   const res = await contentful.getEntries(data);
 
-  const persons = res.items.map((c) => ({
-    id: c.sys.id,
-    name: c.fields.name,
-    photoUrl:
-      c.fields.photoUrl ||
-      `https://avatar.iran.liara.run/username?username=${(c.fields.name as string).trim()
-        .split(" ")[0]}`,
-    instagramUrl: c.fields.instagramUrl,
-  }));
+  const persons = res.items.map((c) => {
+    let url = "";
+    if (c.fields.instagram)
+      url =
+        "https:" +
+        (c.fields.instagram as { fields: { file: { url: string } } }).fields
+          .file.url;
+    else
+      url = `https://avatar.iran.liara.run/username?username=${c.fields.name}`;
+
+    return {
+      id: c.sys.id,
+      name: c.fields.name,
+      photoUrl: url,
+      instagramUrl: c.fields.instagramUrl,
+    };
+  });
 
   return NextResponse.json({
     items: persons,

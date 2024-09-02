@@ -6,6 +6,7 @@ import { Category, Person } from "@/types/global";
 import { Calendar, CalendarDays } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 type Episode = {
   id: number;
@@ -21,19 +22,20 @@ type Episode = {
 };
 
 const Page = async ({ params }: { params: { id: number } }) => {
+  if(!params.id) return notFound();
   const episode = await getEpisode(params.id);
-  console.log(episode);
+
   return (
-    <main className="w-screen min-h-screen pt-28 pb-10 px-10 flex flex-row gap-x-5">
+    <main className="w-screen min-h-screen pt-28 pb-10 px-7 lg:px-10 flex flex-col lg:flex-row gap-5">
       <Image
         src={episode.thumbnail}
         alt={episode.title}
         width={400}
         height={400}
-        className="rounded-2xl w-[50vw] h-[70vh] object-cover fixed top-[18vh] left-5"
+        className="rounded-2xl w-full lg:w-[50vw] h-fit lg:h-[70vh] lg:object-cover lg:fixed lg:top-[18vh] lg:left-5"
       />
-      <div className="bg-gradient-to-b from-black via-black to-transparent w-[75%] h-40 left-[28%] z-20 fixed top-0"></div>
-      <section className="w-5/12 px-4 ml-[50vw]">
+      <div className="bg-gradient-to-b from-black via-black to-transparent w-full lg:w-[75%] h-40 lg:left-[28%] z-20 fixed top-0"></div>
+      <section className="w-full lg:w-5/12 lg:px-4 lg:ml-[50vw]">
         <small className="text-xl text-zinc-600 font-bold">
           #{episode.countNumber}
         </small>
@@ -56,12 +58,12 @@ const Page = async ({ params }: { params: { id: number } }) => {
             }).format(new Date(episode.publishDate))}
           </p>
         </div>
-        <div className="flex flex-row items-center justify-start gap-5 mb-5">
+        <div className="flex flex-row items-center justify-between lg:justify-start gap-5 mb-5">
           {episode.spotifyLink && (
             <Link
               target="_blank"
               href={episode.spotifyLink}
-              className="flex flex-row gap-2 px-2 rounded-lg items-center text-md text-white bg-green-600 hover:bg-green-700 h-12"
+              className="flex flex-row gap-2 px-2 max-lg:w-[48%] rounded-lg items-center justify-evenly text-md text-white bg-green-600 hover:bg-green-700 h-12"
             >
               <Image src="/spotify.svg" alt="Spotify" width={30} height={30} />
               <p className="text-xl font-bold">Spotify</p>
@@ -71,7 +73,7 @@ const Page = async ({ params }: { params: { id: number } }) => {
             <Link
               target="_blank"
               href={episode.youtubeLink}
-              className="flex flex-row gap-2 px-2 rounded-lg items-center text-md text-white bg-red-600 hover:bg-red-700 h-12"
+              className="flex flex-row gap-2 px-2 rounded-lg max-lg:w-[48%] items-center text-md text-white bg-red-600 hover:bg-red-700 h-12"
             >
               <Image src="/youtube.svg" alt="Youtube" width={45} height={30} />
               <p className="text-xl font-bold">Youtube</p>
@@ -101,6 +103,7 @@ const Page = async ({ params }: { params: { id: number } }) => {
 
 export async function getEpisode(id: number): Promise<Episode> {
   const res = await fetch(`${process.env.BASE_URL}/api/episodes/${id}`);
+  if(!res.ok) return notFound();
   const episode = await res.json();
   return episode;
 }

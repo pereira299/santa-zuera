@@ -15,6 +15,7 @@ export async function GET(req: NextRequest) {
       "fields.publishDate",
       "fields.categories",
       "fields.participantes",
+      "fields.countNumber",
     ],
     limit: qtd,
     skip: (page - 1) * qtd,
@@ -28,15 +29,22 @@ export async function GET(req: NextRequest) {
     }));
 
     const participantes = (item.fields.participantes as Array<Entry>)?.map(
-      (p) => ({
-        id: p.sys.id,
-        name: p.fields.name,
-        photoUrl:
-          p.fields.photoUrl ||
-          `https://avatar.iran.liara.run/username?username=${
-            (p.fields.name as string).trim().split(" ")[0]
-          }`,
-      })
+      (p) => {
+        let url = "";
+        if (p.fields.instagram)
+          url =
+            "https:" +
+            (p.fields.instagram as { fields: { file: { url: string } } }).fields
+              .file.url;
+        else
+          url = `https://avatar.iran.liara.run/username?username=${p.fields.name}`;
+
+        return {
+          id: p.sys.id,
+          name: p.fields.name,
+          photoUrl: url,
+        };
+      }
     );
 
     return {

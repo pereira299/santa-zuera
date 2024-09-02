@@ -18,7 +18,7 @@ const LastEpisodes = ({episodes}: EpisodeProps) => {
       <ul className="flex flex-col md:flex-row gap-10 w-full justify-center">
         {episodes.map((episode) => (
             <li key={episode.title} className="w-full md:w-4/12">
-                <Episode {...episode} persons={episode.participantes} />
+                <Episode {...episode} persons={episode.participantes} countNumber={episode.countNumber} />
             </li>
         ))}
       </ul>
