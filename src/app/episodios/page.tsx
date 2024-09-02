@@ -76,7 +76,7 @@ const EpisodePage = async ({
 };
 export default EpisodePage;
 
-export async function getContent(params: {
+async function getContent(params: {
   "person[]"?: string;
   "category[]"?: string;
   startDate?: string;

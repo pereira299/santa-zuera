@@ -35,7 +35,8 @@ export async function GET(req: NextRequest) {
   const data: Episode = {
     title: name,
     id: id,
-    date: new Date(spotifyEpisodes.items[0].release_date),
+    countNumber: id,
+    publishDate: spotifyEpisodes.items[0].release_date,
     links: {
       spotify: spotifyEpisodes.items[0].external_urls.spotify,
       youtube: "",
@@ -44,7 +45,7 @@ export async function GET(req: NextRequest) {
     description: spotifyEpisodes.items[0].description,
     duration: spotifyEpisodes.items[0].duration_ms,
     categories: [],
-    participants: [],
+    participantes: [],
   };
   // generate categories and participantes
   const allCategories = await contentful.getEntries({
@@ -59,8 +60,8 @@ export async function GET(req: NextRequest) {
     getCategories(spotifyEpisodes.items[0], name, categoryList, gemini),
   ]);
 
-  data.categories = categories;
-  data.participants = participants;
+  data.categories = categories.map((c) => ({ name: c, id: "" }));
+  data.participantes = participants.map((p) => ({ name: p, id: "", photoUrl: "", instagramUrl: "" }));
   // get new episodes from youtube
   const youtubeEpisodes = await getYouTubeEpisodes(name, id);
   youtubeEpisodes.items.find((item) => {
@@ -78,7 +79,7 @@ export async function GET(req: NextRequest) {
       id: c.sys.id,
     }))
     .filter((c) => {
-      return data.categories.includes(c.name);
+      return data.categories.find(cc => cc.name === c.name);
     });
   const persons = (
     await contentful.getEntries({ content_type: "person" })
@@ -88,7 +89,7 @@ export async function GET(req: NextRequest) {
       id: p.sys.id,
     }))
     .filter((p) => {
-      return data.participants.includes(p.name);
+      return data.participantes.find(pp => pp.name == p.name);
     });
 
   const entry = await contentful.createEntry("episode", {
@@ -114,7 +115,7 @@ export async function GET(req: NextRequest) {
         data: {},
       },
     },
-    publishDate: { "en-US": data.date },
+    publishDate: { "en-US": data.publishDate },
     durationMs: { "en-US": data.duration },
     spotifyLink: { "en-US": data.links.spotify },
     youtubeLink: { "en-US": data.links.youtube },

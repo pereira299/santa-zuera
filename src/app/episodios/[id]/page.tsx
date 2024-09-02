@@ -101,7 +101,7 @@ const Page = async ({ params }: { params: { id: number } }) => {
   );
 };
 
-export async function getEpisode(id: number): Promise<Episode> {
+async function getEpisode(id: number): Promise<Episode> {
   const res = await fetch(`${process.env.BASE_URL}/api/episodes/${id}`);
   if(!res.ok) return notFound();
   const episode = await res.json();

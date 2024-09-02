@@ -16,7 +16,7 @@ export default async function Home() {
   );
 }
 
-export const getLastEpisodes = async (): Promise<Episode[]> => {
+const getLastEpisodes = async (): Promise<Episode[]> => {
   const res = await fetch(process.env.BASE_URL + "/api/episodes/list?qtd=3");
   const data = await res.json();
   return data;
