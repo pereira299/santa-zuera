@@ -37,8 +37,8 @@ export async function GET(
   const participantes = (
     res.items[0].fields.participantes as Array<Entry>
   )?.map((p) => ({
+    ...p.fields,
     id: p.sys.id,
-    name: p.fields.name,
   }));
 
   const description = (res.items[0].fields.description as RichText)?.content[0]

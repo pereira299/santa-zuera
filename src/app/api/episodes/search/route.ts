@@ -31,6 +31,7 @@ export async function GET(req: NextRequest) {
       "fields.publishDate",
       "fields.categories",
       "fields.participantes",
+      "fields.countNumber",
     ],
     limit: qtd,
     skip: (page - 1) * qtd,

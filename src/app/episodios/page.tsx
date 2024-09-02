@@ -20,7 +20,8 @@ const EpisodePage = async ({
     persons: { items: Person[] };
     episodes: { items: EpisodeType[]; total: number; page: number };
   } = await getContent(searchParams);
-
+  console.log(content.episodes.items);
+  
   return (
     <main className="min-h-screen px-4 pt-32">
       <h1 className="font-bitter text-4xl font-bold mb-5 fixed top-[6.5rem]">

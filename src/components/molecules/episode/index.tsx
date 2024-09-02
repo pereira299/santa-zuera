@@ -1,9 +1,11 @@
+import Link from "next/link";
 import Avatar from "../../atoms/avatar";
 import Chip from "../../atoms/chip";
 
 type EpisodeProps = {
   title: string;
   publishDate: string;
+  countNumber: number;
   categories: {
     name: string;
     id: string;
@@ -39,7 +41,7 @@ const Episode = (props: EpisodeProps) => {
         ]
       : props.persons;
   return (
-    <div className={`${props.className} hover:brightness-90`}>
+    <Link href={`/episodios/${props.countNumber}`} className={`${props.className} hover:brightness-90`}>
       <div
         className="w-full h-56 rounded-2xl transition-all duration-200 bg-center bg-cover hover:bg-[size:120%] bg-slate-400 flex flex-row justify-end p-2 gap-x-2"
         style={{
@@ -67,7 +69,7 @@ const Episode = (props: EpisodeProps) => {
           ))}
         </span>
       </div>
-    </div>
+    </Link>
   );
 };
 

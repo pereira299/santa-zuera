@@ -13,6 +13,10 @@ const nextConfig = {
             {
                 protocol: 'https',
                 hostname: 'shorturl.at',
+            },
+            {
+                protocol: 'https',
+                hostname: 'i.scdn.co',
             }
         ]
     }

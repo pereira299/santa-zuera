@@ -29,6 +29,7 @@ export declare type Episode = {
   id: number;
   thumbnail: string;
   title: string;
+  countNumber: number;
   description: string;
   duration: number;
   links: {
