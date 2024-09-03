@@ -28,7 +28,7 @@ const Hero = () => {
           />
         </Link>
       </span>
-      <Link href="#membros" passHref>
+      <Link href="#membros" aria-label="membros" passHref>
         <ChevronDown className="animate-pulse text-white left-[45%] absolute bottom-5 h-fit w-12 2xl:w-20 3xl:w-24" />
       </Link>
     </section>

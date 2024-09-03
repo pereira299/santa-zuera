@@ -23,15 +23,14 @@ const Filter = (props: FilterProps) => {
   const [title, setTitle] = useState("");
 
   useLayoutEffect(() => {
-    const search = window.location.search;
     const filters = window.sessionStorage.getItem("filters");
     if (!filters) return;
     const res = JSON.parse(filters);
-    setPerson(res.person);
-    setCategory(res.category);
-    setStartDate(res.startDate);
-    setEndDate(res.endDate);
-    setTitle(res.title);
+    setPerson(res.person || []);
+    setCategory(res.category || []);
+    setStartDate(res.startDate || "");
+    setEndDate(res.endDate || "");
+    setTitle(res.title || "");
   }, []);
 
   const personList = useMemo(() => {
