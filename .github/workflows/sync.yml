@@ -1,0 +1,16 @@
+name: Sync Santa Zuera Episodes
+
+on:
+    schedule:
+        - cron: "0 2 * * 0,3"
+
+jobs:
+    fetch:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout repository
+                uses: actions/checkout@v2
+
+            - name: Fetch API
+                run: curl -sSf "https://santa-zuera.vercel.app/api/sync"
