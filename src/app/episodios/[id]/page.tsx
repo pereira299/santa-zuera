@@ -4,6 +4,7 @@ import ReadMore from "@/src/components/atoms/read-more";
 import { Button } from "@/src/components/ui/button";
 import { Category, Person } from "@/types/global";
 import { Calendar, CalendarDays } from "lucide-react";
+import { Metadata, ResolvingMetadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -21,12 +22,35 @@ type Episode = {
   spotifyLink: string;
 };
 
-const Page = async ({ params }: { params: { id: number } }) => {
-  if(!params.id) return notFound();
+type Props = {
+  params: { id: number };
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+const Page = async ({ params }: Props) => {
+  if (!params.id) return notFound();
   const episode = await getEpisode(params.id);
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "PodcastEpisode",
+    name: "Santa Zuera",
+    url: `https://${process.env.BASE_URL}`,
+    image: `https://${process.env.BASE_URL}/logo.png`,
+    description: "A Zuera Santifica! Santa Zuera, o Podcast do Santa Carona!",
+    sameAs: [
+      "https://www.facebook.com/santacarona",
+      "https://www.instagram.com/santacarona",
+      "https://www.youtube.com/santacarona",
+    ],
+  };
 
   return (
     <main className="w-screen min-h-screen pt-28 pb-10 px-7 lg:px-10 flex flex-col lg:flex-row gap-5">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Image
         src={episode.thumbnail}
         alt={episode.title}
@@ -101,9 +125,54 @@ const Page = async ({ params }: { params: { id: number } }) => {
   );
 };
 
+export async function generateMetadata(
+  { params, searchParams }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  // read route params
+  const id = params.id;
+
+  // fetch data
+  const product: Episode = await await fetch(
+    `${process.env.BASE_URL}/api/episodes/${id}`
+  ).then((res) => res.json());
+
+  return {
+    title: `Santa Zuera #${id} | ${product.title}`,
+    description: `Confira o episódio ${id} - ${product.title} do Santa Zuera, o Podcast do Santa Carona!`,
+    keywords: [
+      "Santa Zuera",
+      "Santa Carona",
+      "Podcast",
+      "Episódio",
+      "Igreja",
+      "Católico",
+      "Cristão",
+      "Religião",
+      "Deus",
+      "Jesus",
+      "Espírito Santo",
+      ...product.categories.map((category) => category.name),
+    ],
+    openGraph: {
+      title: `Santa Zuera #${id} | ${product.title}`,
+      description: `Confira o episódio ${id} - ${product.title} do Santa Zuera, o Podcast do Santa Carona!`,
+      images: [
+        {
+          url: product.thumbnail,
+          width: 400,
+          height: 400,
+          alt: product.title,
+        }
+      ],
+      siteName: "Santa Zuera",
+    }
+  };
+}
+
 async function getEpisode(id: number): Promise<Episode> {
   const res = await fetch(`${process.env.BASE_URL}/api/episodes/${id}`);
-  if(!res.ok) return notFound();
+  if (!res.ok) return notFound();
   const episode = await res.json();
   return episode;
 }

@@ -2,9 +2,41 @@ import Episode from "@/src/components/molecules/episode";
 import Paginate from "@/src/components/molecules/pagination";
 import Filter from "@/src/components/organisms/Filter";
 import FilterMobile from "@/src/components/organisms/filter-mobile";
-import { Button } from "@/src/components/ui/button";
 import { Category, Episode as EpisodeType, Person } from "@/types/global";
-import { FilterIcon, FilterX } from "lucide-react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Episódios | Santa Zuera",
+  description:
+    "A Zuera Santifica! Confira os episódios do Santa Zuera, o Podcast do Santa Carona!",
+  keywords: [
+    "Santa Zuera",
+    "Santa Carona",
+    "Podcast",
+    "Episódios",
+    "Igreja",
+    "Católico",
+    "Cristão",
+    "Religião",
+    "Deus",
+    "Jesus",
+    "Espírito Santo",
+  ],
+  openGraph: {
+    title: "Episódios | Santa Zuera",
+    description:
+      "A Zuera Santifica! Confira os episódios do Santa Zuera, o Podcast do Santa Carona!",
+    images: [
+      {
+        url: `https://${process.env.BASE_URL}/logo.png`,
+        width: 488,
+        height: 488,
+        alt: "Santa Zuera",
+      },
+    ],
+    siteName: "Santa Zuera",
+  },
+};
 
 const EpisodePage = async ({
   searchParams,
@@ -24,8 +56,26 @@ const EpisodePage = async ({
     episodes: { items: EpisodeType[]; total: number; page: number };
   } = await getContent(searchParams);
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "PodcastSeries",
+    name: "Santa Zuera",
+    url: `https://${process.env.BASE_URL}`,
+    image: `https://${process.env.BASE_URL}/logo.png`,
+    description: "A Zuera Santifica! Santa Zuera, o Podcast do Santa Carona!",
+    sameAs: [
+      "https://www.facebook.com/santacarona",
+      "https://www.instagram.com/santacarona",
+      "https://www.youtube.com/santacarona",
+    ],
+  };
+
   return (
     <main className="min-h-screen px-4 pt-32">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <h1 className="font-bitter text-4xl font-bold mb-5 fixed z-30 top-[6.5rem]">
         Episódios
       </h1>
