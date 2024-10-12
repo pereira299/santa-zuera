@@ -5,6 +5,8 @@ import FilterMobile from "@/src/components/organisms/filter-mobile";
 import { Category, Episode as EpisodeType, Person } from "@/types/global";
 import { Metadata } from "next";
 
+export const revalidate = 3600;
+
 export const metadata: Metadata = {
   title: "Episódios | Santa Zuera",
   description:
