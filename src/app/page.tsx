@@ -5,6 +5,8 @@ import MembersMobile from "../components/organisms/sections/membersMobile";
 import { Episode } from "@/types/global";
 import { gloria } from "./layout";
 
+export const revalidate = 3600;
+
 export default async function Home() {
   const jsonLd = {
     "@context": "https://schema.org",
