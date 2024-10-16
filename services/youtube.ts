@@ -11,12 +11,13 @@ class GoogleYoutube {
       auth: process.env.GCP_API_KEY,
     });
   }
-  async search(search: string, type: contentType[]): Promise<YoutubeSearch> {
+  async search(search: string, type: contentType[], channelId?: string): Promise<YoutubeSearch> {
     const res = await this.youtube.search
       .list({
         part: ["snippet"],
         q: search,
         type: type,
+        channelId: channelId,
       })
       .catch((err) => {
         return err.response;
