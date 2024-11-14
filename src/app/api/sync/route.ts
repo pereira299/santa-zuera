@@ -15,7 +15,7 @@ export async function GET(req: NextRequest) {
   const spotifyEpisodes = await getSpotifyEpisodes();
 
   const lastStoredEpisodeId = lastStoredEpisode[0].fields.countNumber as Number;
-  const hasNewEpisode = spotifyEpisodes.items.find((item) => getId(item) === lastStoredEpisodeId);
+  const hasNewEpisode = spotifyEpisodes.items.find((item) => getId(item) === lastStoredEpisodeId+1);
   // check if there are new episodes
   // const lastStoredEpisodeDate = new Date(
   //   lastStoredEpisode[0].fields.publishDate as string
