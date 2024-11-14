@@ -149,7 +149,7 @@ const getEpisodes = async () => {
   const res = await contentful.getEntries({
     content_type: "episode",
     select: ["fields.title", "fields.countNumber", "fields.publishDate"],
-    order: ["-fields.publishDate"],
+    order: ["-fields.countNumber"],
   });
 
   return res.items;
