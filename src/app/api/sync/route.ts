@@ -14,36 +14,43 @@ export async function GET(req: NextRequest) {
   // get episodes from spotify
   const spotifyEpisodes = await getSpotifyEpisodes();
 
+  const lastStoredEpisodeId = lastStoredEpisode[0].fields.countNumber as Number;
+  const hasNewEpisode = spotifyEpisodes.items.find((item) => getId(item) === lastStoredEpisodeId);
   // check if there are new episodes
-  const lastStoredEpisodeDate = new Date(
-    lastStoredEpisode[0].fields.publishDate as string
-  ).getTime();
-  const lastSpotifyEpisodeDate = new Date(
-    spotifyEpisodes.items[0].release_date
-  ).getTime();
-  if (lastStoredEpisodeDate >= lastSpotifyEpisodeDate) {
+  // const lastStoredEpisodeDate = new Date(
+  //   lastStoredEpisode[0].fields.publishDate as string
+  // ).getTime();
+  // const lastSpotifyEpisodeDate = new Date(
+  //   spotifyEpisodes.items[0].release_date
+  // ).getTime();
+  // if (lastStoredEpisodeDate >= lastSpotifyEpisodeDate) {
+  //  return NextResponse.json({
+  //     message: "No new episodes",
+  //   });
+  // }
+  if (!hasNewEpisode){
     return NextResponse.json({
-      message: "No new episodes",
-    });
+      message: "No new episodes"
+    })
   }
-
-  const name = getTitle(spotifyEpisodes.items[0]);
-  const id = getId(spotifyEpisodes.items[0]);
-  const thumbnail = spotifyEpisodes.items[0].images.sort(
+  
+  const name = getTitle(hasNewEpisode);
+  const id = getId(hasNewEpisode);
+  const thumbnail = hasNewEpisode.images.sort(
     (a, b) => b.width - a.width
   )[0].url;
   const data: Episode = {
     title: name,
     id: id,
     countNumber: id,
-    publishDate: spotifyEpisodes.items[0].release_date,
+    publishDate: hasNewEpisode.release_date,
     links: {
-      spotify: spotifyEpisodes.items[0].external_urls.spotify,
+      spotify: hasNewEpisode.external_urls.spotify,
       youtube: "",
     },
     thumbnail: thumbnail,
-    description: spotifyEpisodes.items[0].description,
-    duration: spotifyEpisodes.items[0].duration_ms,
+    description: hasNewEpisode.description,
+    duration: hasNewEpisode.duration_ms,
     categories: [],
     participantes: [],
   };
@@ -56,8 +63,8 @@ export async function GET(req: NextRequest) {
 
   const gemini = new Gemini();
   const [participants, categories] = await Promise.all([
-    getParticipants(spotifyEpisodes.items[0], gemini),
-    getCategories(spotifyEpisodes.items[0], name, categoryList, gemini),
+    getParticipants(hasNewEpisode, gemini),
+    getCategories(hasNewEpisode, name, categoryList, gemini),
   ]);
 
   data.categories = categories.map((c) => ({ name: c, id: "" }));
