@@ -17,7 +17,7 @@ export async function GET(req: NextRequest) {
   const spotifyEpisodes = await getSpotifyEpisodes();
 
   const lastStoredEpisodeId = Number(lastStoredEpisode[1].fields.countNumber);
-  const hasNewEpisode = spotifyEpisodes.items.find((item) => getId(item) === lastStoredEpisodeId+1);
+  const hasNewEpisode = spotifyEpisodes.items.find((item) => getId(item) > lastStoredEpisodeId)
   // check if there are new episodes
   // const lastStoredEpisodeDate = new Date(
   //   lastStoredEpisode[0].fields.publishDate as string
@@ -34,7 +34,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({
       message: "No new episodes",
       lastEpisode: {
-        ...lastStoredEpisode[0].fields
+        ...lastStoredEpisode[1].fields
       }
     })
   }
