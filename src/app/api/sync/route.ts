@@ -8,6 +8,8 @@ import {  Video, YoutubeSearch } from "@/types/youtube";
 import { getCategories, getId, getParticipants, getTitle } from "@/utils/spotify";
 import * as youtube from "@/utils/youtube";
 
+export const revalidate = 0;
+
 export async function GET(req: NextRequest) {
   // get last stored episode
   const lastStoredEpisode = await getEpisodes();
