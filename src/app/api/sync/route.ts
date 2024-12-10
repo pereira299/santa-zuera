@@ -30,7 +30,10 @@ export async function GET(req: NextRequest) {
   // }
   if (!hasNewEpisode){
     return NextResponse.json({
-      message: "No new episodes"
+      message: "No new episodes",
+      lastEpisode: {
+        ...lastStoredEpisode[0].fields
+      }
     })
   }
   
