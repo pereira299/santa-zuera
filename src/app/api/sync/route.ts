@@ -17,7 +17,7 @@ export async function GET(req: NextRequest) {
   const spotifyEpisodes = await getSpotifyEpisodes();
 
   const lastStoredEpisodeId = Number(lastStoredEpisode[1].fields.countNumber);
-  const hasNewEpisode = spotifyEpisodes.items.find((item) => getId(item) > lastStoredEpisodeId)
+  const hasNewEpisode = spotifyEpisodes.items.find((item) => getId(item) === lastStoredEpisodeId+1);
   // check if there are new episodes
   // const lastStoredEpisodeDate = new Date(
   //   lastStoredEpisode[0].fields.publishDate as string
@@ -73,7 +73,7 @@ export async function GET(req: NextRequest) {
   ]);
 
   data.categories = categories.map((c) => ({ name: c, id: "" }));
-  data.participantes = participants.map((p) => ({ name: p, id: "", photoUrl: "", instagramUrl: "" }));
+  data.participantes = participants.map((p) => ({ name: p.replace("Max", "Maximiliano").replace("Pfutz", "Pfütz"), id: "", photoUrl: "", instagramUrl: "" }));
   // get new episodes from youtube
   const youtubeEpisodes = await getYouTubeEpisodes(name, id);
   youtubeEpisodes.items.find((item) => {

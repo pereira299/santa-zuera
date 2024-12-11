@@ -35,11 +35,16 @@ export const getCategories = async (
 export const getId = (data: SpotifyEpisode): number => {
   const name = data.name.split("-");
   const id =
-    name.find((n) => n.includes("#"))?.replace(/[^#\d{1,8}]/g, "") || "";
-  return Number(id.substring(1));
+    name.find((n) => n.search(/\d{3,8}/) >= 0)?.replace(/[^\d{1,8}]/g, "") || "";
+  return Number(id);
 };
 
 export const getTitle = (data: SpotifyEpisode): string => {
   const name = data.name.split("-");
-  return name.find((n) => !n.includes("#"))?.trim() || "";
+  const title = name.find((n) => n.search(/\d{3,8}/) === -1)?.trim() || "";
+  const splittedTitle = title.split("|");
+  if(splittedTitle.length > 1) {
+    return splittedTitle[0].trim();
+  }
+  return title;
 };
