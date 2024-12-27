@@ -69,7 +69,7 @@ export async function GET(req: NextRequest) {
   const gemini = new Gemini();
   const [participants, categories] = await Promise.all([
     getParticipants(hasNewEpisode, gemini),
-    getCategories(hasNewEpisode, name, categoryList, gemini),
+    getCategories(hasNewEpisode, name, ["Fé", ...categoryList], gemini),
   ]);
 
   data.categories = categories.map((c) => ({ name: c, id: "" }));
