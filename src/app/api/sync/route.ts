@@ -69,11 +69,13 @@ export async function GET(req: NextRequest) {
   const gemini = new Gemini();
   const [participants, categories] = await Promise.all([
     getParticipants(hasNewEpisode, gemini),
-    getCategories(hasNewEpisode, name, ["Fé", ...categoryList], gemini),
+    getCategories(hasNewEpisode, name, [ ...categoryList], gemini),
   ]);
 
+  categories.push("Fé");
   data.categories = categories.map((c) => ({ name: c, id: "" }));
   data.participantes = participants.map((p) => ({ name: p.replace("Max", "Maximiliano").replace("Pfutz", "Pfütz"), id: "", photoUrl: "", instagramUrl: "" }));
+
   // get new episodes from youtube
   const youtubeEpisodes = await getYouTubeEpisodes(name, id);
   youtubeEpisodes.items.find((item) => {
