@@ -106,6 +106,12 @@ export async function GET(req: NextRequest) {
       return data.participantes.find(pp => pp.name == p.name);
     });
 
+  const defaultPersons = [
+    { name: "Guilherme Cadoiss", id: "4LwEhSlec4KRIJ0IGsc77z" },
+    { name: "Carlos Neiva", id: "7KuNHEJg9ri1FNuP83qiQk" },
+  ]
+
+  const personsFinal = persons.length > 0 ? persons : defaultPersons;
   const entry = await contentful.createEntry("episode", {
     countNumber: { "en-US": data.id },
     title: { "en-US": data.title },
@@ -140,7 +146,7 @@ export async function GET(req: NextRequest) {
       })),
     },
     participantes: {
-      "en-US": persons.map((p) => ({
+      "en-US": personsFinal.map((p) => ({
         sys: { type: "Link", linkType: "Entry", id: p.id },
       })),
     },

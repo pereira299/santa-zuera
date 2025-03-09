@@ -21,7 +21,7 @@ export const getCategories = async (
   const res: { categories: string[] } = await gemini.promptJson([
     "Cada categoria deve ter no máximo 3 palavras.",
     "Não utilize os termos, podcast, episódio e o título do episódio.",
-    `De preferencia para as categorias "${categories.join(", ")}"`,
+    `De preferencia para as categorias "${categories.join(", ")}" principalmente se estiverem presentes no titulo '${title}'.`,
     `Analise descrição do episódio e liste as 5 categorias mais relevantes com o tema "${title}". Retorne no formato { categories: [] }`,
     data.description,
   ]);
