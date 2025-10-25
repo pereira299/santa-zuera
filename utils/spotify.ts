@@ -33,18 +33,17 @@ export const getCategories = async (
 };
 
 export const getId = (data: SpotifyEpisode): number => {
-  const name = data.name.split("-");
-  const id =
-    name.find((n) => n.search(/\d{3,8}/) >= 0)?.replace(/[^\d{1,8}]/g, "") || "";
-  return Number(id);
+  const regex = /(?:Santa Zuera\s*#?\s*(\d+)|(\d+))\s*[-–]?\s*(.+?)\s*(?:\|\s*Santa Zuera)?$/i;
+  const id = regex.exec(data.name);
+  if (!id) return 0;
+  return Number(id[1] || id[2] || 0);
 };
 
 export const getTitle = (data: SpotifyEpisode): string => {
-  const name = data.name.split("-");
-  const title = name.find((n) => n.search(/\d{3,8}/) === -1)?.trim() || "";
-  const splittedTitle = title.split("|");
-  if(splittedTitle.length > 1) {
-    return splittedTitle[0].trim();
+  const regex = /(?:Santa Zuera\s*#?\s*(\d+)|(\d+))\s*[-–]?\s*(.+?)\s*(?:\|\s*Santa Zuera)?$/i;
+  const title = regex.exec(data.name);
+  if (title) {
+    return title[3].trim();
   }
-  return title;
+  return "";
 };

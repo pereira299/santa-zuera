@@ -154,7 +154,17 @@ export async function GET(req: NextRequest) {
 
   return NextResponse.json({
     message: "New episodes stored",
-    data: entry,
+    data: {
+      name: entry.fields.title["en-US"],
+      id: entry.sys.id,
+      description: entry.fields.description["en-US"],
+      publishDate: entry.fields.publishDate["en-US"],
+      duration: entry.fields.durationMs["en-US"],
+      spotifyLink: entry.fields.spotifyLink["en-US"],
+      youtubeLink: entry.fields.youtubeLink["en-US"],
+      thumbnail: entry.fields.thumbnail["en-US"],
+      number: entry.fields.countNumber["en-US"],
+    },
   });
 }
 

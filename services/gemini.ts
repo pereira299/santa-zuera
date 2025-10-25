@@ -1,42 +1,49 @@
-import { GenerativeModel, GoogleGenerativeAI } from "@google/generative-ai";
+import {GoogleGenAI, Model, Pager} from '@google/genai';
 
 class Gemini {
-  private gen: GoogleGenerativeAI;
+  private gen: GoogleGenAI;
   private model: string;
 
   constructor() {
-    this.gen = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
-    this.model = process.env.GEMINI_MODEL || "gemini-1.5-flash";
+    this.gen = new GoogleGenAI({apiKey: process.env.GEMINI_API_KEY || ""});
+    this.model = process.env.GEMINI_MODEL || "gemini-2.5-flash";
+  }
+
+  async getModels(): Promise<Pager<Model>> {
+    return this.gen.models.list();
   }
 
   async prompt(msg: string | string[]) {
-    const model = this.gen.getGenerativeModel({ model: this.model });
-    const result = await model.generateContent(msg);
+    const result = await this.gen.models.generateContent({
+      model: this.model,
+      contents: msg,
+    })
     if (
-      !result.response.candidates ||
-      result.response.candidates.length === 0
+      !result.candidates ||
+      result.candidates.length === 0
     ) {
       return null;
     }
-    return result.response.candidates[0].content.parts;
+    return result.text;
   }
 
   async promptJson(msg: string | string[]): Promise<any> {
-    const model = this.gen.getGenerativeModel({
+    const result = await this.gen.models.generateContent({
       model: this.model,
-      generationConfig: {
+      contents: msg,
+      config: {
         responseMimeType: "application/json",
-      },
+      }
     });
-    const result = await model.generateContent(msg);
+    result.text;
     if (
-      !result.response.candidates ||
-      result.response.candidates.length === 0
+      !result.candidates ||
+      result.candidates.length === 0
     ) {
       return null;
     }
-    const content = result.response.candidates[0].content.parts[0];
-    return JSON.parse(content.text || "");
+    const content = result.text
+    return JSON.parse(content || "");
   }
 }
 
