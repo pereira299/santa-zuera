@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
-import { Bitter, Caveat, Gloria_Hallelujah, Lato } from "next/font/google";
-import "./globals.css";
+import { Analytics } from "@vercel/analytics/next"
+import { GoogleAnalytics } from '@next/third-parties/google'
+import { Bitter, Gloria_Hallelujah, Lato } from "next/font/google";
 import Header from "../components/molecules/header";
 import Footer from "../components/molecules/footer";
 import PageLoader from "../components/organisms/page-loader";
+import "./globals.css";
 
 const lato = Lato({
   subsets: ["latin"],
@@ -79,23 +81,12 @@ export default function RootLayout({
     })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');`,
           }}
         ></script>
-        <script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=G-18YT47LENN"
-        ></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-
-            gtag('config', 'G-18YT47LENN');`,
-          }}
-        ></script>
+        <GoogleAnalytics gaId="G-18YT47LENN" />
       </head>
       <body
         className={`${bitter.variable} ${lato.variable} ${gloria.variable} dark font-lato overflow-x-hidden bg-black`}
       >
+        <Analytics />
         <PageLoader />
         <Header />
         {children}

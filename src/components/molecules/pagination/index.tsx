@@ -6,8 +6,6 @@ import {
   PaginationEllipsis,
   PaginationItem,
   PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
 } from "../../ui/pagination";
 import { usePathname, useSearchParams } from "next/navigation";
 
@@ -17,7 +15,7 @@ type PaginateProps = {
   baseUrl: string;
 };
 
-const Paginate = ({ total, page, baseUrl }: PaginateProps) => {
+const Paginate = ({ total, page }: PaginateProps) => {
   const path = usePathname();
   const params = useSearchParams();
 
